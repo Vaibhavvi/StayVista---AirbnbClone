@@ -1,0 +1,61 @@
+<% layout('layout/boilerplate') %>
+
+<h1 class="text-center my-4 fw-semibold">Explore All Listings</h1>
+
+<div class="container pb-5">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+
+    <% if (listings && listings.length > 0) { %>
+      <% listings.forEach((listing, index) => { %>
+        <div class="col">
+          <div class="card shadow-sm border-0 h-100">
+            
+            <!-- Image Carousel -->
+            <div id="carousel<%= index %>" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <% 
+                  // Fix: make sure images work for both array or single image
+                  let images = Array.isArray(listing.image) ? listing.image : [listing.image];
+                  images.forEach((img, i) => { 
+                %>
+                  <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                    <img 
+                      src="<%= img.url ? img.url : img %>" 
+                      class="d-block w-100" 
+                      style="height:220px; object-fit:cover;" 
+                      alt="<%= listing.title %>"
+                    >
+                  </div>
+                <% }) %>
+              </div>
+              <% if (images.length > 1) { %>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= index %>" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= index %>" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </button>
+              <% } %>
+            </div>
+
+            <!-- Card Content -->
+            <div class="card-body">
+              <h5 class="card-title fw-semibold"><%= listing.title %></h5>
+              <p class="card-text text-muted mb-1"><%= listing.location %>, <%= listing.country %></p>
+              <p class="fw-bold text-danger mb-1">₹<%= listing.price.toLocaleString() %> / night</p>
+              <p class="text-secondary small">
+                <%= listing.description.substring(0, 80) %>...
+              </p>
+              <a href="/listings/<%= listing._id %>" class="btn btn-danger btn-sm mt-2">View Listing</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div class="text-center text-muted py-5">
+        <h4>No listings available yet.</h4>
+      </div>
+    <% } %>
+
+  </div>
+</div>

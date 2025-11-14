@@ -1,0 +1,107 @@
+<% layout('layout/boilerplate') %>
+
+<style>
+  /* === Card Styling === */
+  .register-card {
+    animation: fadeInUp 0.8s ease;
+    background: #fff;
+    border-radius: 20px;
+    width: 400px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 40px 0; /* 👈 Adds subtle space top & bottom of card */
+  }
+
+  .register-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  /* === Gradient Text === */
+  .text-gradient {
+    background: linear-gradient(90deg, #16a085, #f4d03f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+  }
+
+  /* === Gradient Button === */
+  .btn-gradient {
+    background: linear-gradient(90deg, #27ae60, #16a085);
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(90deg, #2ecc71, #1abc9c);
+    transform: scale(1.02);
+  }
+
+  /* === Animation === */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* === Responsive Adjustments === */
+  @media (max-width: 576px) {
+    .register-card {
+      width: 100%;
+      margin: 20px 0;
+    }
+  }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card register-card shadow-lg p-4">
+    <h2 class="text-center mb-3 fw-bold text-gradient">Create Account</h2>
+    <p class="text-center text-muted mb-4">Join our community today 🏡</p>
+
+    <% if (error && error.length) { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+
+    <% if (success && success.length) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+
+    <form action="/register" method="POST">
+      <div class="mb-3">
+        <label for="username" class="form-label fw-semibold">Username</label>
+        <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Email address</label>
+        <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+
+      <button type="submit" class="btn btn-gradient w-100 py-2 fw-semibold">Register</button>
+    </form>
+
+    <p class="text-center mt-3 mb-0 text-muted">
+      Already have an account?
+      <a href="/login" class="text-gradient fw-semibold text-decoration-none">Login here</a>
+    </p>
+  </div>
+</div>

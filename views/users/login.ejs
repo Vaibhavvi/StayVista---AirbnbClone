@@ -1,0 +1,107 @@
+<% layout('layout/boilerplate') %>
+
+<style>
+  /* Smooth fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .login-card {
+    animation: fadeIn 0.8s ease-in-out;
+    border: none;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .login-card h2 {
+    color: #28a745;
+    font-weight: 700;
+  }
+
+  .form-label {
+    color: #333;
+    font-weight: 600;
+  }
+
+  .btn-login {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+  }
+
+  .btn-login:hover {
+    background: linear-gradient(45deg, #20c997, #28a745);
+    transform: scale(1.03);
+  }
+
+  .alert {
+    border-radius: 0.5rem;
+    font-weight: 500;
+  }
+
+  .form-control:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  }
+
+  .login-footer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .login-footer a {
+    color: #198754;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .login-footer a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="card login-card p-4 mx-auto" style="max-width: 430px;">
+    <h2 class="text-center mb-3">Welcome Back 👋</h2>
+    <p class="text-center text-muted mb-4">Login to continue your StayVista journey</p>
+
+    <% if (error && error.length) { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+
+    <% if (success && success.length) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+
+    <form action="/login" method="POST">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required placeholder="Enter your username">
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required placeholder="Enter your password">
+      </div>
+
+      <button type="submit" class="btn btn-login w-100 py-2 mt-2">Login</button>
+    </form>
+
+    <div class="login-footer">
+      <p class="text-muted mt-3">Don't have an account? 
+        <a href="/register">Create one</a>
+      </p>
+    </div>
+  </div>
+</div>
