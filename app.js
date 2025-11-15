@@ -100,16 +100,6 @@ app.get('/', (req, res) => {
   res.render('home.ejs', { title: "Wanderlust Home" });
 });
 
-app.get("/demoUser", async (req, res) => {
-  let fakeUser = new User({
-    email: "demo@example.com",
-    username: "demoUser"
-  })
-
-  let registeredUser = await User.register(fakeUser, "demopassword");
-  res.send(registeredUser);
-});
-
 
 // Listing Routes
 app.use('/listings', listingRouter);
